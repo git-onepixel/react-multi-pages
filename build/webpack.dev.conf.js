@@ -25,7 +25,6 @@ module.exports = merge(baseWebpackConfig, {
     host: config.dev.host,
     port: process.env.PORT || config.dev.port,
     proxy: config.dev.proxyTable,
-    historyApiFallback: true,
     quiet: true,
   },
 
