@@ -3,11 +3,11 @@
  */
 
 const webpack = require('webpack');
-const config = require('../config');
 const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.conf');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const baseWebpackConfig = require('./webpack.base.conf');
+const config = require('./config');
 const helper = require('./helper');
 
 const assetsPath = (filename) => `${config.dev.assetsSubDirectory}/${filename}`;
@@ -30,7 +30,7 @@ module.exports = merge(baseWebpackConfig, {
 
   module: {
     rules: [
-      helper.createStyleLoader(true),
+      helper.createStyleLoader(false),
       helper.createImageLoader(assetsPath('img/[name].[ext]')),
       helper.createFontLoader(assetsPath('fonts/[name].[ext]')),
     ],
@@ -47,10 +47,10 @@ module.exports = merge(baseWebpackConfig, {
       filename: assetsPath('css/[name].css'),
     }),
 
+    new FriendlyErrorsPlugin(),
+
     new webpack.HotModuleReplacementPlugin(),
 
-    new FriendlyErrorsPlugin(),
-  ].concat(
-    helper.createHtmlWebpackPlugins(),
-  ),
+    ...helper.createHtmlWebpackPlugins(false),
+  ],
 });
